@@ -240,6 +240,12 @@ While the examples in documentation (and the test suite) show type
 constraints from L<Types::Standard>, but any L<Type::Library>-based or
 L<MooseX::Types>-based type constraints should work.
 
+=begin trustme
+
+=item ttie
+
+=end trustme
+
 =head1 BUGS
 
 Please report any bugs to
