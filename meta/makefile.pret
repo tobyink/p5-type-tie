@@ -4,9 +4,9 @@
 	perl_version_from m`Type::Tie`;
 	version_from      m`Type::Tie`;
 	readme_from       m`Type::Tie`;
-	requires          p`Exporter::TypeTiny 0.003_08`;
+	requires          p`Exporter::TypeTiny 0.004`;
 	requires          p`Hash::FieldHash`;
 	test_requires     p`Test::Fatal`;
-	test_requires     p`Types::Standard 0.003_08`;
+	test_requires     p`Types::Standard 0.004`;
 .
 
