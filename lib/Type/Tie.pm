@@ -13,7 +13,7 @@ BEGIN
 {
 	package Type::Tie;
 	our $AUTHORITY = 'cpan:TOBYINK';
-	our $VERSION   = '0.001';
+	our $VERSION   = '0.002';
 	
 	use base "Exporter::TypeTiny";
 	our @EXPORT = qw(ttie);
@@ -45,7 +45,7 @@ BEGIN
 {
 	package Type::Tie::BASE;
 	our $AUTHORITY = 'cpan:TOBYINK';
-	our $VERSION   = '0.001';
+	our $VERSION   = '0.002';
 	
 	use Hash::FieldHash qw(fieldhash);
 	fieldhash(my %TYPE);
@@ -95,7 +95,7 @@ BEGIN
 {
 	package Type::Tie::ARRAY;
 	our $AUTHORITY = 'cpan:TOBYINK';
-	our $VERSION   = '0.001';
+	our $VERSION   = '0.002';
 	
 	use base qw( Tie::StdArray Type::Tie::BASE );
 	
@@ -130,7 +130,7 @@ BEGIN
 {
 	package Type::Tie::HASH;
 	our $AUTHORITY = 'cpan:TOBYINK';
-	our $VERSION   = '0.001';
+	our $VERSION   = '0.002';
 	
 	use base qw( Tie::StdHash Type::Tie::BASE );
 	
@@ -153,7 +153,7 @@ BEGIN
 {
 	package Type::Tie::SCALAR;
 	our $AUTHORITY = 'cpan:TOBYINK';
-	our $VERSION   = '0.001';
+	our $VERSION   = '0.002';
 	
 	use base qw( Tie::StdScalar Type::Tie::BASE );
 	
@@ -239,8 +239,28 @@ conform.
    $count = "Monkey!";  # dies
 
 While the examples in documentation (and the test suite) show type
-constraints from L<Types::Standard>, but any L<Type::Library>-based or
-L<MooseX::Types>-based type constraints should work.
+constraints from L<Types::Standard>, but any type constraint objects
+supporting the L<Type::API> interfaces should work. This includes:
+
+=over
+
+=item *
+
+L<Moose::Meta::TypeConstraint> / L<MooseX::Types>
+
+=item *
+
+L<Mouse::Meta::TypeConstraint> / L<MouseX::Types>
+
+=item *
+
+L<Specio>
+
+=item *
+
+L<Type::Tiny|Type::Tiny::Manual>
+
+=back
 
 =begin trustme
 
@@ -255,12 +275,9 @@ L<http://rt.cpan.org/Dist/Display.html?Queue=Type-Tie>.
 
 =head1 SEE ALSO
 
-L<Type::Tiny>.
-
+L<Type::API>,
+L<Type::Utils>,
 L<Moose::Manual::Types>,
-L<Moose::Meta::TypeConstraint>,
-L<Moose::Util::TypeConstraints>.
-
 L<MooseX::Lexical::Types>.
 
 =head1 AUTHOR
