@@ -49,11 +49,13 @@ BEGIN
 	
 	use Hash::FieldHash qw(fieldhash);
 	fieldhash(my %TYPE);
+	fieldhash(my %COERCE);
 	
 	sub _set_type
 	{
 		my $self = shift;
-		$TYPE{$self} = $_[0];
+		$COERCE{$self} = $_[0]->can("has_coercion") && $_[0]->can("coerce") && $_[0]->has_coercion;
+		$TYPE{$self}   = $_[0];
 	}
 	
 	sub type
@@ -82,7 +84,7 @@ BEGIN
 	{
 		my $self = shift;
 		my $type = $TYPE{$self};
-		my $val  = $type->has_coercion ? $type->coerce($_[0]) : $_[0];
+		my $val  = $COERCE{$self} ? $type->coerce($_[0]) : $_[0];
 		Carp::croak(sprintf "%s does not meet type constraint $type", _dd($_[0]))
 			unless $type->check($val);
 		return $val;
