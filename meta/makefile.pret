@@ -1,12 +1,9 @@
 # This file provides instructions for packaging.
 
 `Type-Tie`
-	perl_version_from m`Type::Tie`;
-	version_from      m`Type::Tie`;
-	readme_from       m`Type::Tie`;
-	requires          p`Exporter::TypeTiny 0.004`;
-	requires          p`Hash::FieldHash`;
-	test_requires     p`Test::Fatal`;
-	test_requires     p`Types::Standard 0.004`;
+	deps:runtime-requirement [ deps:on "Exporter::TypeTiny 0.004" ];
+	deps:runtime-requirement [ deps:on "Hash::FieldHash" ];
+	deps:test-requirement    [ deps:on "Test::Fatal" ];
+	deps:test-requirement    [ deps:on "Types::Standard 0.004" ];
 .
 
