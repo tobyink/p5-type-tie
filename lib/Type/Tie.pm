@@ -82,12 +82,18 @@ BEGIN
 	
 	sub store_value
 	{
-		my $self = shift;
-		my $type = $TYPE{$self};
-		my $val  = $COERCE{$self} ? $type->coerce($_[0]) : $_[0];
-		Carp::croak(sprintf "%s does not meet type constraint $type", _dd($_[0]))
-			unless $type->check($val);
-		return $val;
+		my $self   = shift;
+		my $type   = $TYPE{$self};
+		my $coerce = $COERCE{$self};
+		
+		my @vals = map {
+			my $val = $coerce ? $type->coerce($_) : $_;
+			Carp::croak(sprintf "%s does not meet type constraint $type", _dd($_[0]))
+				unless $type->check($val);
+			$val;
+		} @_;
+		
+		wantarray ? @vals : $vals[0];
 	}
 };
 
@@ -116,13 +122,20 @@ BEGIN
 	sub PUSH
 	{
 		my $self = shift;
-		$self->SUPER::PUSH(map $self->store_value($_), @_);
+		$self->SUPER::PUSH( $self->store_value(@_) );
 	}
 	
 	sub UNSHIFT
 	{
 		my $self = shift;
-		$self->SUPER::UNSHIFT(map $self->store_value($_), @_);
+		$self->SUPER::UNSHIFT( $self->store_value(@_) );
+	}
+
+	sub SPLICE
+	{
+		my $self = shift;
+		my ($start, $len, @rest) = @_;
+		$self->SUPER::SPLICE($start, $len,  $self->store_value(@rest) );
 	}
 };
 
