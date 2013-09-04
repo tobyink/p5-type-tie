@@ -88,7 +88,7 @@ BEGIN
 		
 		my @vals = map {
 			my $val = $coerce ? $type->coerce($_) : $_;
-			Carp::croak(sprintf "%s does not meet type constraint $type", _dd($_[0]))
+			Carp::croak(sprintf "%s does not meet type constraint $type", _dd($_))
 				unless $type->check($val);
 			$val;
 		} @_;
@@ -135,7 +135,7 @@ BEGIN
 	{
 		my $self = shift;
 		my ($start, $len, @rest) = @_;
-		$self->SUPER::SPLICE($start, $len,  $self->store_value(@rest) );
+		$self->SUPER::SPLICE($start, $len, $self->store_value(@rest) );
 	}
 };
 
