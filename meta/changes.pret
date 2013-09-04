@@ -10,3 +10,9 @@
 		item "Support Type::API."^^Change;
 	].
 
+`Type-Tie 0.003 cpan:TOBYINK`
+	issued  2013-09-04;
+	changeset [
+		item "Implement SPLICE as part of the tied array interface."^^Bugfix;
+	].
+
