@@ -24,4 +24,5 @@
 		item "Use compiled checks and coercions when possible."^^Change;
 		item "Rename the undocumented `store_value` method to `coerce_and_check_value`."^^Change;
 		item "Fix weird bug in Perl < 5.14."^^Bugfix;
+		item "Add a test case for using Type::Tie with MooseX::Types::Moose."^^Tests;
 	].
