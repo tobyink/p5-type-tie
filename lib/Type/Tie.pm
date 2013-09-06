@@ -112,7 +112,7 @@ BEGIN
 			Carp::croak(sprintf "%s does not meet type constraint %s", _dd($_), $TYPE{$self})
 				unless $check->($val);
 			$val;
-		} @_;
+		} (my @cp = @_);  # need to copy @_ for Perl < 5.14
 		
 		wantarray ? @vals : $vals[0];
 	}
