@@ -101,7 +101,7 @@ BEGIN
 		}
 	}
 	
-	sub store_value
+	sub coerce_and_check_value
 	{
 		my $self   = shift;
 		my $check  = $CHECK{$self};
@@ -137,26 +137,26 @@ BEGIN
 	sub STORE
 	{
 		my $self = shift;
-		$self->SUPER::STORE($_[0], $self->store_value($_[1]));
+		$self->SUPER::STORE($_[0], $self->coerce_and_check_value($_[1]));
 	}
 	
 	sub PUSH
 	{
 		my $self = shift;
-		$self->SUPER::PUSH( $self->store_value(@_) );
+		$self->SUPER::PUSH( $self->coerce_and_check_value(@_) );
 	}
 	
 	sub UNSHIFT
 	{
 		my $self = shift;
-		$self->SUPER::UNSHIFT( $self->store_value(@_) );
+		$self->SUPER::UNSHIFT( $self->coerce_and_check_value(@_) );
 	}
 
 	sub SPLICE
 	{
 		my $self = shift;
 		my ($start, $len, @rest) = @_;
-		$self->SUPER::SPLICE($start, $len, $self->store_value(@rest) );
+		$self->SUPER::SPLICE($start, $len, $self->coerce_and_check_value(@rest) );
 	}
 };
 
@@ -179,7 +179,7 @@ BEGIN
 	sub STORE
 	{
 		my $self = shift;
-		$self->SUPER::STORE($_[0], $self->store_value($_[1]));
+		$self->SUPER::STORE($_[0], $self->coerce_and_check_value($_[1]));
 	}
 };
 
@@ -202,7 +202,7 @@ BEGIN
 	sub STORE
 	{
 		my $self = shift;
-		$self->SUPER::STORE( $self->store_value($_[0]) );
+		$self->SUPER::STORE( $self->coerce_and_check_value($_[0]) );
 	}
 };
 
