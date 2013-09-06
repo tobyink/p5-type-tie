@@ -50,12 +50,33 @@ BEGIN
 	use Hash::FieldHash qw(fieldhash);
 	fieldhash(my %TYPE);
 	fieldhash(my %COERCE);
+	fieldhash(my %CHECK);
 	
 	sub _set_type
 	{
 		my $self = shift;
-		$COERCE{$self} = $_[0]->can("has_coercion") && $_[0]->can("coerce") && $_[0]->has_coercion;
-		$TYPE{$self}   = $_[0];
+		my $type = $_[0];
+		
+		$TYPE{$self} = $type;
+		
+		if ($type->isa('Type::Tiny'))
+		{
+			$CHECK{$self} = $type->compiled_check;
+			$COERCE{$self} = undef;
+			$COERCE{$self} = $type->coercion->compiled_coercion
+				if $type->has_coercion;
+		}
+		else
+		{
+			$CHECK{$self} = $type->can('compiled_check')
+				? $type->compiled_check
+				: sub { $type->check($_[0]) };
+			$COERCE{$self} = undef;
+			$COERCE{$self} = sub { $type->coerce($_[0]) }
+				if $type->can("has_coercion")
+				&& $type->can("coerce")
+				&& $type->has_coercion;
+		}
 	}
 	
 	sub type
@@ -83,13 +104,13 @@ BEGIN
 	sub store_value
 	{
 		my $self   = shift;
-		my $type   = $TYPE{$self};
+		my $check  = $CHECK{$self};
 		my $coerce = $COERCE{$self};
 		
 		my @vals = map {
-			my $val = $coerce ? $type->coerce($_) : $_;
-			Carp::croak(sprintf "%s does not meet type constraint $type", _dd($_))
-				unless $type->check($val);
+			my $val = $coerce ? $coerce->($_) : $_;
+			Carp::croak(sprintf "%s does not meet type constraint %s", _dd($_), $TYPE{$self})
+				unless $check->($val);
 			$val;
 		} @_;
 		
