@@ -18,3 +18,10 @@
 		item "Fix link to source code repository."^^Packaging;
 	].
 
+`Type-Tie 0.004 cpan:TOBYINK`
+	issued  2013-09-06;
+	changeset [
+		item "Use compiled checks and coercions when possible."^^Change;
+		item "Rename the undocumented `store_value` method to `coerce_and_check_value`."^^Change;
+		item "Fix weird bug in Perl < 5.14."^^Bugfix;
+	].
