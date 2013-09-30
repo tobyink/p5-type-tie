@@ -15,7 +15,7 @@ BEGIN
 	our $AUTHORITY = 'cpan:TOBYINK';
 	our $VERSION   = '0.004';
 	
-	use base "Exporter::TypeTiny";
+	use base "Exporter::Tiny";
 	our @EXPORT = qw(ttie);
 	
 	sub ttie (\[$@%]$;@)#>&%*/&<%\$[]^!@;@)

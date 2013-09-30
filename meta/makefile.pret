@@ -1,7 +1,7 @@
 # This file provides instructions for packaging.
 
 `Type-Tie`
-	deps:runtime-requirement [ deps:on "Exporter::TypeTiny 0.004"^^deps:CpanId ];
+	deps:runtime-requirement [ deps:on "Exporter::Tiny 0.026"^^deps:CpanId ];
 	deps:runtime-requirement [ deps:on "Hash::FieldHash"^^deps:CpanId ];
 	deps:test-requirement    [ deps:on "Test::Fatal"^^deps:CpanId ];
 	deps:test-requirement    [ deps:on "Test::Requires"^^deps:CpanId ];
