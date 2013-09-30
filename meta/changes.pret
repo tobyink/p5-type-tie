@@ -26,3 +26,10 @@
 		item "Fix weird bug in Perl < 5.14."^^Bugfix;
 		item "Add a test case for using Type::Tie with MooseX::Types::Moose."^^Tests;
 	].
+
+`Type-Tie 0.005 cpan:TOBYINK`
+	issued  2013-09-30;
+	changeset [
+		item "Use Exporter::Tiny instead of Exporter::TypeTiny."^^Update;
+		item "Stop using base.pm."^^Change;
+	].
