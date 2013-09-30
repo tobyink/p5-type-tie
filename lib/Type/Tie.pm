@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 use Carp ();
+use Exporter::Tiny ();
 use Tie::Array ();
 use Tie::Hash ();
 use Tie::Scalar ();
@@ -14,9 +15,8 @@ BEGIN
 	package Type::Tie;
 	our $AUTHORITY = 'cpan:TOBYINK';
 	our $VERSION   = '0.004';
-	
-	use base "Exporter::Tiny";
-	our @EXPORT = qw(ttie);
+	our @ISA       = qw( Exporter::Tiny );
+	our @EXPORT    = qw( ttie );
 	
 	sub ttie (\[$@%]$;@)#>&%*/&<%\$[]^!@;@)
 	{
@@ -123,8 +123,7 @@ BEGIN
 	package Type::Tie::ARRAY;
 	our $AUTHORITY = 'cpan:TOBYINK';
 	our $VERSION   = '0.004';
-	
-	use base qw( Tie::StdArray Type::Tie::BASE );
+	our @ISA       = qw( Tie::StdArray Type::Tie::BASE );
 	
 	sub TIEARRAY
 	{
@@ -165,8 +164,7 @@ BEGIN
 	package Type::Tie::HASH;
 	our $AUTHORITY = 'cpan:TOBYINK';
 	our $VERSION   = '0.004';
-	
-	use base qw( Tie::StdHash Type::Tie::BASE );
+	our @ISA       = qw( Tie::StdHash Type::Tie::BASE );
 	
 	sub TIEHASH
 	{
@@ -188,8 +186,7 @@ BEGIN
 	package Type::Tie::SCALAR;
 	our $AUTHORITY = 'cpan:TOBYINK';
 	our $VERSION   = '0.004';
-	
-	use base qw( Tie::StdScalar Type::Tie::BASE );
+	our @ISA       = qw( Tie::StdScalar Type::Tie::BASE );
 	
 	sub TIESCALAR
 	{
