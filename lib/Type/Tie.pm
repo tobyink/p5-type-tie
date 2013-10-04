@@ -47,7 +47,13 @@ BEGIN
 	our $AUTHORITY = 'cpan:TOBYINK';
 	our $VERSION   = '0.005';
 	
-	use Hash::FieldHash qw(fieldhash);
+	BEGIN {
+		my $impl;
+		$impl ||= eval { require Hash::FieldHash;       'Hash::FieldHash' };
+		$impl ||= do   { require Hash::Util::FieldHash; 'Hash::Util::FieldHash' };
+		$impl->import('fieldhash');
+	};
+	
 	fieldhash(my %TYPE);
 	fieldhash(my %COERCE);
 	fieldhash(my %CHECK);
