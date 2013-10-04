@@ -33,3 +33,9 @@
 		item "Use Exporter::Tiny instead of Exporter::TypeTiny."^^Update;
 		item "Stop using base.pm."^^Change;
 	].
+
+`Type-Tie 0.006 cpan:TOBYINK`
+	issued  2013-10-04;
+	changeset [
+		item "Make Hash::FieldHash optional for Perl >= v5.9.4; use Hash::Util::FieldHash if Hash::FieldHash is unavailable."^^Change;
+	].
