@@ -310,6 +310,11 @@ L<Type::Tiny|Type::Tiny::Manual>
 Please report any bugs to
 L<http://rt.cpan.org/Dist/Display.html?Queue=Type-Tie>.
 
+=head1 SUPPORT
+
+B<< IRC: >> support is available through in the I<< #moops >> channel
+on L<irc.perl.org|http://www.irc.perl.org/channels.html>.
+
 =head1 SEE ALSO
 
 L<Type::API>,
