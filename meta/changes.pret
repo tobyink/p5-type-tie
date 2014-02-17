@@ -39,3 +39,17 @@
 	changeset [
 		item "Make Hash::FieldHash optional for Perl >= v5.9.4; use Hash::Util::FieldHash if Hash::FieldHash is unavailable."^^Change;
 	].
+
+`Type-Tie 0.007 cpan:TOBYINK`
+	issued  2014-02-17;
+	changeset [
+		item [
+			a dcs:Bugfix;
+			label "Change ttie prototype from ([\\$@%]$;@) to ([\\$@%]@).";
+			dcs:thanks cpan:HAARG;
+		];
+		item [
+			a dcs:Packaging;
+			label "Include my TODO list.";
+		];
+	].
