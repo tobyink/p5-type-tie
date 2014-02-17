@@ -18,7 +18,7 @@ BEGIN
 	our @ISA       = qw( Exporter::Tiny );
 	our @EXPORT    = qw( ttie );
 	
-	sub ttie (\[$@%]$;@)#>&%*/&<%\$[]^!@;@)
+	sub ttie (\[$@%]@)#>&%*/&<%\$[]^!@;@)
 	{
 		my ($ref, $type, @vals) = @_;
 		
