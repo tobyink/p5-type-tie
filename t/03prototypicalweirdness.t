@@ -25,6 +25,7 @@ the same terms as the Perl 5 programming language system itself.
 use strict;
 use warnings;
 use Test::More;
+use Test::Requires 'Types::Standard';
 
 use Type::Tie;
 use Types::Standard qw( ArrayRef Num );

@@ -24,6 +24,7 @@ use strict;
 use warnings;
 
 use Test::More;
+use Test::Requires 'Types::Standard';
 use Test::Fatal;
 
 use Type::Tie;
@@ -37,7 +38,7 @@ $count = 3.14159;    is($count, 3);
 
 like(
 	exception { $count = "Monkey!" },
-	qr{^Value "Monkey!" does not meet type constraint Int},
+	qr{^Value "Monkey!" did not pass type constraint},
 );
 
 ttie my @numbers, Int->plus_coercions(Num, 'int($_)'), 1, 2, 3.14159;
@@ -53,17 +54,17 @@ is_deeply(
 
 like(
 	exception { push @numbers, 1, 2.2, 3, "Bad", 4 },
-	qr{^Value "Bad" does not meet type constraint Int},
+	qr{^Value "Bad" did not pass type constraint},
 );
 
 like(
 	exception { unshift @numbers, 1, 2.2, 3, "Bad", 4 },
-	qr{^Value "Bad" does not meet type constraint Int},
+	qr{^Value "Bad" did not pass type constraint},
 );
 
 like(
 	exception { $numbers[2] .= "Bad" },
-	qr{^Value "2Bad" does not meet type constraint Int},
+	qr{^Value "2Bad" did not pass type constraint},
 );
 
 is_deeply(
@@ -81,7 +82,7 @@ is_deeply(
 
 like(
 	exception { $stuff{baz} = undef },
-	qr{^Undef does not meet type constraint Int},
+	qr{^Undef did not pass type constraint},
 );
 
 delete $stuff{bar};

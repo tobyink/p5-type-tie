@@ -42,7 +42,7 @@ $count = 3.14159;    is($count, 3);
 
 like(
 	exception { $count = "Monkey!" },
-	qr{^Value "Monkey!" does not meet type constraint},
+	qr{^Validation failed},
 );
 
 ttie my @numbers, $Rounded, 1, 2, 3.14159;
@@ -58,17 +58,17 @@ is_deeply(
 
 like(
 	exception { push @numbers, 1, 2.2, 3, "Bad", 4 },
-	qr{^Value "Bad" does not meet type constraint},
+	qr{^Validation failed},
 );
 
 like(
 	exception { unshift @numbers, 1, 2.2, 3, "Bad", 4 },
-	qr{^Value "Bad" does not meet type constraint},
+	qr{^Validation failed},
 );
 
 like(
 	exception { $numbers[2] .= "Bad" },
-	qr{^Value "2Bad" does not meet type constraint},
+	qr{^Validation failed},
 );
 
 is_deeply(
@@ -86,7 +86,7 @@ is_deeply(
 
 like(
 	exception { $stuff{baz} = undef },
-	qr{^Undef does not meet type constraint},
+	qr{^Validation failed},
 );
 
 delete $stuff{bar};

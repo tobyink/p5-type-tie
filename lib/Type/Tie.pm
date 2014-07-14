@@ -115,8 +115,14 @@ BEGIN
 		
 		my @vals = map {
 			my $val = $coerce ? $coerce->($_) : $_;
-			Carp::croak(sprintf "%s does not meet type constraint %s", _dd($_), $TYPE{$self})
-				unless $check->($val);
+			if (not $check->($val)) {
+				my $type = $TYPE{$self};
+				Carp::croak(
+					$type && $type->can('get_message')
+						? $type->get_message($val))
+						: sprintf("%s does not meet type constraint %s", _dd($_), $type||'Unknown')
+				);
+			}
 			$val;
 		} (my @cp = @_);  # need to copy @_ for Perl < 5.14
 		
