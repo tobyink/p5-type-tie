@@ -119,7 +119,7 @@ BEGIN
 				my $type = $TYPE{$self};
 				Carp::croak(
 					$type && $type->can('get_message')
-						? $type->get_message($val))
+						? $type->get_message($val)
 						: sprintf("%s does not meet type constraint %s", _dd($_), $type||'Unknown')
 				);
 			}
