@@ -61,3 +61,9 @@
 		item "Include a test case with a simple local implementation of Type::API."^^Tests;
 		item "Type::Tie now passes through the type constraint's error message rather than generating its own. It will still generate its own error message if the type constraint object fails to provide a get_message method."^^Change;
 	].
+
+`Type-Tie 0.009 cpan:TOBYINK`
+	issued  2014-09-17;
+	changeset [
+		item "Repackage with newer version of Dist::Inkt to fix META.json error."^^Packaging;
+	].
