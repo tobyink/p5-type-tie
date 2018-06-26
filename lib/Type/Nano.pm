@@ -208,29 +208,53 @@ It optionally exports the following type constraints:
 
 =over
 
-=item Any
+=item *
 
-=item Defined
+Any
 
-=item Undef
+=item *
 
-=item Ref
+Defined
 
-=item ArrayRef
+=item *
 
-=item HashRef
+Undef
 
-=item CodeRef
+=item *
 
-=item Object
+Ref
 
-=item Str
+=item *
 
-=item Bool
+ArrayRef
 
-=item Num
+=item *
 
-=item Int
+HashRef
+
+=item *
+
+CodeRef
+
+=item *
+
+Object
+
+=item *
+
+Str
+
+=item *
+
+Bool
+
+=item *
+
+Num
+
+=item *
+
+Int
 
 =back
 
@@ -240,9 +264,17 @@ Types support the following methods:
 
 =item C<< $type->check($value) >>
 
+Checks the value against the constraint; returns a boolean.
+
 =item C<< $type->get_message($failing_value) >>
 
+Returns an error message. Does not check the value.
+
 =back
+
+Types overload C<< &{} >> to do something like:
+
+  $type->check($value) or croak($type->get_message($value))
 
 I'll stress that this module is I<only> intended for use in testing.
 It eliminates Type::Tie's testing dependency on L<Types::Standard>.
