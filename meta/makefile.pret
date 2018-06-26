@@ -4,10 +4,10 @@
 	deps:runtime-requirement    [ deps:on "perl 5.008005"^^deps:CpanId ];
 	deps:runtime-requirement    [ deps:on "Exporter::Tiny 0.026"^^deps:CpanId ];
 	deps:runtime-recommendation [ deps:on "Hash::FieldHash"^^deps:CpanId ];
-	deps:runtime-suggests       [ deps:on "Types::Standard 0.004"^^deps:CpanId ];
+	deps:runtime-suggestion     [ deps:on "Types::Standard 0.004"^^deps:CpanId ];
 	deps:test-requirement       [ deps:on "Test::More 0.96"^^deps:CpanId ];
-	deps:test-requirement       [ deps:on "Test::Fatal"^^deps:CpanId ];
-	deps:test-requirement       [ deps:on "Test::Requires"^^deps:CpanId ];
-	deps:test-suggests          [ deps:on "Types::Standard 0.004"^^deps:CpanId ];
-	deps:test-suggests          [ deps:on "MooseX::Types::Moose"^^deps:CpanId ];
+	deps:test-suggestion        [ deps:on "Test::Fatal"^^deps:CpanId ];
+	deps:test-suggestion        [ deps:on "Test::Requires"^^deps:CpanId ];
+	deps:test-suggestion        [ deps:on "Types::Standard 0.004"^^deps:CpanId ];
+	deps:test-suggestion        [ deps:on "MooseX::Types::Moose"^^deps:CpanId ];
 .
