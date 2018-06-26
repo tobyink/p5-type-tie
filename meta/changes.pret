@@ -74,3 +74,10 @@
 		item "Bundle copies of Test::Requires, Try::Tiny, and Test::Fatal in inc."^^Packaging;
 		item "Bundle Type::Nano for testing."^^Packaging;
 	].
+
+`Type-Tie 0.011 cpan:TOBYINK`
+	issued  2018-06-26;
+	changeset [
+		item "Type::Nano does overloading."^^Addition;
+		item "Improvements to Type::Nano documentation."^^Documentation;
+	].
