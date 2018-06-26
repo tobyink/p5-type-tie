@@ -2,9 +2,6 @@ language: perl
 script: HARNESS_IS_VERBOSE=1 prove -Iinc -Ilib t
 install:
   - cpanm "Exporter::Tiny" "Hash::FieldHash" "MooseX::Types::Moose" "Test::Fatal" "Test::Requires" "Types::Standard"
-env:
-  - PERL_TYPE_TINY_XS=0
-  - PERL_TYPE_TINY_XS=1
 perl:
   - "5.8"
   - "5.10"
@@ -22,3 +19,10 @@ matrix:
     - perl: "5.8"
       install:
         - cpanm "Exporter::Tiny" "Hash::FieldHash"
+      env:
+        - BUILD_NAME=Minimal
+    # XS
+    - perl: "5.26"
+      install:
+        - cpanm "Exporter::Tiny" "Hash::FieldHash" "Type::Tiny::XS" "Test::Fatal" "Test::Requires" "Types::Standard"
+        - BUILD_NAME=XS
