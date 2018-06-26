@@ -25,4 +25,5 @@ matrix:
     - perl: "5.26"
       install:
         - cpanm "Exporter::Tiny" "Hash::FieldHash" "Type::Tiny::XS" "Test::Fatal" "Test::Requires" "Types::Standard"
+      env:
         - BUILD_NAME=XS
