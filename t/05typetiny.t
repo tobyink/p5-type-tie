@@ -4,7 +4,7 @@
 
 =head1 PURPOSE
 
-Test that Type::Tie compiles and seems to work.
+Test that Type::Tie seems to work with L<Type::Tiny>.
 
 =head1 AUTHOR
 
@@ -24,25 +24,27 @@ use strict;
 use warnings;
 
 use Test::More;
+use Test::Requires 'Types::Standard';
 use Test::Fatal;
 
 use Type::Tie;
-use Type::Nano qw( Int Num );
+use Types::Standard qw( Int Num );
 
-ttie my $count, Int, 0;
+ttie my $count, Int->plus_coercions(Num, 'int($_)'), 0;
 
 $count++;            is($count, 1);
 $count = 2;          is($count, 2);
+$count = 3.14159;    is($count, 3);
 
 like(
 	exception { $count = "Monkey!" },
-	qr{^Value "Monkey!" did not pass type constraint Int},
+	qr{^Value "Monkey!" did not pass type constraint},
 );
 
-ttie my @numbers, Int, 1, 2, 3;
+ttie my @numbers, Int->plus_coercions(Num, 'int($_)'), 1, 2, 3.14159;
 
-unshift @numbers, 0;
-$numbers[4] = 4;
+unshift @numbers, 0.1;
+$numbers[4] = 4.4;
 push @numbers, scalar @numbers;
 
 is_deeply(
@@ -51,18 +53,18 @@ is_deeply(
 );
 
 like(
-	exception { push @numbers, 1, 2, 3, "Bad", 4 },
-	qr{^Value "Bad" did not pass type constraint Int},
+	exception { push @numbers, 1, 2.2, 3, "Bad", 4 },
+	qr{^Value "Bad" did not pass type constraint},
 );
 
 like(
-	exception { unshift @numbers, 1, 2, 3, "Bad", 4 },
-	qr{^Value "Bad" did not pass type constraint Int},
+	exception { unshift @numbers, 1, 2.2, 3, "Bad", 4 },
+	qr{^Value "Bad" did not pass type constraint},
 );
 
 like(
 	exception { $numbers[2] .= "Bad" },
-	qr{^Value "2Bad" did not pass type constraint Int},
+	qr{^Value "2Bad" did not pass type constraint},
 );
 
 is_deeply(
@@ -80,7 +82,7 @@ is_deeply(
 
 like(
 	exception { $stuff{baz} = undef },
-	qr{^Undef did not pass type constraint Int},
+	qr{^Undef did not pass type constraint},
 );
 
 delete $stuff{bar};
