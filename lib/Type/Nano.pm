@@ -161,6 +161,26 @@ sub get_message { # Type::API::Constraint
 			: sprintf("Value %s did not pass type constraint %s", B::perlstring($value), $self->{name});
 }
 
+# Overloading
+#
+
+no strict 'refs'; # avoid loading overload.pm
+*{__PACKAGE__ . '::(('} = sub {};
+*{__PACKAGE__ . '::()'} = sub {};
+*{__PACKAGE__ . '::()'} = do { my $x = 1; \$x };
+*{__PACKAGE__ . '::(bool'} = sub { 1 };
+*{__PACKAGE__ . '::(""'} = sub { shift->{name} };
+*{__PACKAGE__ . '::(&{}'} = sub {
+	my $self = shift;
+	sub {
+		my ($value) = @_;
+		$self->check($value) or do {
+			require Carp;
+			Carp::croak($self->get_message($value));
+		};
+	};
+};
+
 1;
 
 __END__
