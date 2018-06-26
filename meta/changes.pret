@@ -67,3 +67,10 @@
 	changeset [
 		item "Repackage with newer version of Dist::Inkt to fix META.json error."^^Packaging;
 	].
+
+`Type-Tie 0.010 cpan:TOBYINK`
+	issued  2018-06-26;
+	changeset [
+		item "Bundle copies of Test::Requires, Try::Tiny, and Test::Fatal in inc."^^Packaging;
+		item "Bundle Type::Nano for testing."^^Packaging;
+	].
