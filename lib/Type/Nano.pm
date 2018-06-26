@@ -7,8 +7,10 @@ use Scalar::Util ();
 
 package Type::Nano;
 
-our @ISA        = qw( Exporter::Tiny );
-our @EXPORT_OK  = qw( Any Defined Undef Ref ArrayRef HashRef CodeRef Object Str Bool Num Int );
+our $AUTHORITY = 'cpan:TOBYINK';
+our $VERSION   = '0.010';
+our @ISA       = qw( Exporter::Tiny );
+our @EXPORT_OK = qw( Any Defined Undef Ref ArrayRef HashRef CodeRef Object Str Bool Num Int );
 
 # Built-in type constraints
 #
