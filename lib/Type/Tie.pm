@@ -51,7 +51,7 @@ BEGIN
 		my $impl;
 		$impl ||= eval { require Hash::FieldHash;       'Hash::FieldHash' };
 		$impl ||= do   { require Hash::Util::FieldHash; 'Hash::Util::FieldHash' };
-		$impl->import('fieldhash');
+		$impl->import('fieldhash', 'id');
 	};
 	
 	fieldhash(my %TYPE);
@@ -128,6 +128,24 @@ BEGIN
 		
 		wantarray ? @vals : $vals[0];
 	}
+
+	sub STORABLE_freeze {
+		my $self = shift;
+		my $cloning = shift;
+		die "Storage::freeze only supported for dclone-ing"
+			unless $cloning;
+		return (id $self, $self);
+	}
+
+	sub STORABLE_thaw {
+		my $self = shift;
+		my $cloning = shift;
+		my $id = shift;
+		my $obj = shift;
+
+		$self->_STORABLE_thaw_update_from_obj($obj);
+		$self->_set_type($TYPE{$id});
+	}
 };
 
 BEGIN
@@ -169,6 +187,12 @@ BEGIN
 		my ($start, $len, @rest) = @_;
 		$self->SUPER::SPLICE($start, $len, $self->coerce_and_check_value(@rest) );
 	}
+
+	sub _STORABLE_thaw_update_from_obj {
+		my $self = shift;
+		my $obj = shift;
+		@$self = @$obj;
+	}
 };
 
 BEGIN
@@ -191,6 +215,12 @@ BEGIN
 		my $self = shift;
 		$self->SUPER::STORE($_[0], $self->coerce_and_check_value($_[1]));
 	}
+
+	sub _STORABLE_thaw_update_from_obj {
+		my $self = shift;
+		my $obj = shift;
+		%$self = %$obj;
+	}
 };
 
 BEGIN
@@ -212,6 +242,12 @@ BEGIN
 	{
 		my $self = shift;
 		$self->SUPER::STORE( $self->coerce_and_check_value($_[0]) );
+	}
+
+	sub _STORABLE_thaw_update_from_obj {
+		my $self = shift;
+		my $obj = shift;
+		$self = $obj;
 	}
 };
 
@@ -310,6 +346,12 @@ L<Type::Tiny|Type::Tiny::Manual>
 =item ttie
 
 =end trustme
+
+=head2 About Cloning with Storage::dclone (and Clone::clone)
+
+Cloning variables with Storage::dclone works, but cloning with Clone::clone is
+not possible. See
+L<Bug #127576 for Type-Tie: Doesn't work with Clone::clone|https://rt.cpan.org/Public/Bug/Display.html?id=127576>
 
 =head1 BUGS
 
