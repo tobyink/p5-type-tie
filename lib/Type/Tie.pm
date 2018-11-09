@@ -51,7 +51,7 @@ BEGIN
 		my $impl;
 		$impl ||= eval { require Hash::FieldHash;       'Hash::FieldHash' };
 		$impl ||= do   { require Hash::Util::FieldHash; 'Hash::Util::FieldHash' };
-		$impl->import('fieldhash', 'id');
+		$impl->import('fieldhash');
 	};
 	
 	fieldhash(my %TYPE);
@@ -129,22 +129,35 @@ BEGIN
 		wantarray ? @vals : $vals[0];
 	}
 
+	# store the $type for the exiting instances so the type can be set
+	# (uncloned) in the clone too. A clone process could be cloning several
+	# instances of this class, so use a hash to hold the types during
+	# cloning
+	my %tmp_clone_types;
 	sub STORABLE_freeze {
+		die "Scalar::Util is needed for cloning with Storage::dclone"
+		    unless eval { require Scalar::Util };
 		my $self = shift;
 		my $cloning = shift;
 		die "Storage::freeze only supported for dclone-ing"
 			unless $cloning;
-		return (id $self, $self);
+		my $type = $TYPE{$self};
+		my $id = Scalar::Util::refaddr(\$type);
+		$tmp_clone_types{$id} = $type;
+		return ($id, $self);
 	}
 
 	sub STORABLE_thaw {
 		my $self = shift;
 		my $cloning = shift;
+		die "Storage::thaw only supported for dclone-ing"
+			unless $cloning;
 		my $id = shift;
 		my $obj = shift;
 
 		$self->_STORABLE_thaw_update_from_obj($obj);
-		$self->_set_type($TYPE{$id});
+		my $type = delete $tmp_clone_types{$id};
+		$self->_set_type($type);
 	}
 };
 

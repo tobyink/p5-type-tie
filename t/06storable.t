@@ -31,6 +31,9 @@ use Type::Tie;
 use Storable qw(dclone);
 use Types::Standard qw( Int );
 
+eval { require Scalar::Util };
+plan skip_all => "Scalar::Util is not available" if $@;
+
 # Hashes
 
 ttie my %hash, Int;
