@@ -146,7 +146,7 @@ BEGIN
 
 		my $type = $TYPE{$self};
 		my $refaddr = Scalar::Util::refaddr($type);
-		$tmp_clone_types{$refaddr} //= [ $type, 0 ];
+		$tmp_clone_types{$refaddr} ||= [ $type, 0 ];
 		++$tmp_clone_types{$refaddr}[1];
 		return (pack('j', $refaddr), $self);
 	}
