@@ -81,3 +81,9 @@
 		item "Type::Nano does overloading."^^Addition;
 		item "Improvements to Type::Nano documentation."^^Documentation;
 	].
+
+`Type-Tie 0.012 cpan:TOBYINK`
+	issued  2019-01-02;
+	changeset [
+		item "Check that Type::Nano type constraints work with Moo."^^Tests;
+	].
