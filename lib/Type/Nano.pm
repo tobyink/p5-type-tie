@@ -186,7 +186,7 @@ sub type {
 	__PACKAGE__->new(
 		name         => $name,
 		constraint   => $coderef,
-	);	
+	);
 }
 
 # OO interface
