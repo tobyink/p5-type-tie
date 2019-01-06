@@ -87,3 +87,9 @@
 	changeset [
 		item "Check that Type::Nano type constraints work with Moo."^^Tests;
 	].
+
+`Type-Tie 0.013 cpan:TOBYINK`
+	issued  2019-01-06;
+	changeset [
+		item "Clarify rationale and use of Type::Nano."^^Documentation;
+	].
