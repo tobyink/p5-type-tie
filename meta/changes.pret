@@ -93,3 +93,9 @@
 	changeset [
 		item "Clarify rationale and use of Type::Nano."^^Documentation;
 	].
+
+`Type-Tie 0.014 cpan:TOBYINK`
+	issued  2019-02-25;
+	changeset [
+		item "Make Type::Nano overloading work on Perl 5.8."^^Bugfix;
+	].
