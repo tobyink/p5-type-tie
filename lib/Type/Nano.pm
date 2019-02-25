@@ -270,7 +270,7 @@ sub get_message { # Type::API::Constraint
 __PACKAGE__ ->_install_overloads(
 	'bool'  => sub { 1 },
 	'""'    => sub { shift->{name} },
-   '&{}'   => sub {
+	'&{}'   => sub {
 		my $self = shift;
 		sub {
 			my ($value) = @_;
