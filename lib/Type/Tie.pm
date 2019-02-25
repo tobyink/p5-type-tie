@@ -307,7 +307,7 @@ L<Type::Tiny|Type::Tiny::Manual>
 
 =begin trustme
 
-=item ttie
+      ttie
 
 =end trustme
 
