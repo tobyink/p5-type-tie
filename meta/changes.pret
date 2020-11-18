@@ -99,3 +99,9 @@
 	changeset [
 		item "Make Type::Nano overloading work on Perl 5.8."^^Bugfix;
 	].
+
+`Type-Tie 0.015 cpan:TOBYINK`
+	issued  2020-11-18;
+	changeset [
+		item "Support Hash::Util::FieldHash::Compat as an alternative to Hash::FieldHash because it seems to pass its tests better on Perl 5.8."^^Change;
+	].
