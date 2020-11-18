@@ -49,8 +49,9 @@ BEGIN
 	
 	BEGIN {
 		my $impl;
-		$impl ||= eval { require Hash::FieldHash;       'Hash::FieldHash' };
-		$impl ||= do   { require Hash::Util::FieldHash; 'Hash::Util::FieldHash' };
+		$impl ||= eval { require Hash::FieldHash;               'Hash::FieldHash' };
+		$impl ||= eval { require Hash::Util::FieldHash;         'Hash::Util::FieldHash' };
+		$impl ||= do   { require Hash::Util::FieldHash::Compat; 'Hash::Util::FieldHash::Compat' };
 		$impl->import('fieldhash');
 	};
 	
