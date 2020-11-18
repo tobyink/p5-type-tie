@@ -129,6 +129,45 @@ BEGIN
 		
 		wantarray ? @vals : $vals[0];
 	}
+
+	# store the $type for the exiting instances so the type can be set
+	# (uncloned) in the clone too. A clone process could be cloning several
+	# instances of this class, so use a hash to hold the types during
+	# cloning. These types are reference counted, so the last reference to
+	# a particular type deletes its key.
+	my %tmp_clone_types;
+	sub STORABLE_freeze {
+		die "Scalar::Util is needed for cloning with Storage::dclone"
+			unless eval { require Scalar::Util };
+		my $self = shift;
+		my $cloning = shift;
+
+		die "Storage::freeze only supported for dclone-ing"
+			unless $cloning;
+
+		my $type = $TYPE{$self};
+		my $refaddr = Scalar::Util::refaddr($type);
+		$tmp_clone_types{$refaddr} ||= [ $type, 0 ];
+		++$tmp_clone_types{$refaddr}[1];
+		return (pack('j', $refaddr), $self);
+	}
+
+	sub STORABLE_thaw {
+		my $self = shift;
+		my $cloning = shift;
+		my $packedRefaddr = shift;
+		my $obj = shift;
+
+		die "Storage::thaw only supported for dclone-ing"
+			unless $cloning;
+
+		$self->_STORABLE_thaw_update_from_obj($obj);
+		my $refaddr = unpack('j', $packedRefaddr);
+		my $type = $tmp_clone_types{$refaddr}[0];
+		--$tmp_clone_types{$refaddr}[1]
+			or delete $tmp_clone_types{$refaddr};
+		$self->_set_type($type);
+	}
 };
 
 BEGIN
@@ -170,6 +209,12 @@ BEGIN
 		my ($start, $len, @rest) = @_;
 		$self->SUPER::SPLICE($start, $len, $self->coerce_and_check_value(@rest) );
 	}
+
+	sub _STORABLE_thaw_update_from_obj {
+		my $self = shift;
+		my $obj = shift;
+		@$self = @$obj;
+	}
 };
 
 BEGIN
@@ -192,6 +237,12 @@ BEGIN
 		my $self = shift;
 		$self->SUPER::STORE($_[0], $self->coerce_and_check_value($_[1]));
 	}
+
+	sub _STORABLE_thaw_update_from_obj {
+		my $self = shift;
+		my $obj = shift;
+		%$self = %$obj;
+	}
 };
 
 BEGIN
@@ -213,6 +264,12 @@ BEGIN
 	{
 		my $self = shift;
 		$self->SUPER::STORE( $self->coerce_and_check_value($_[0]) );
+	}
+
+	sub _STORABLE_thaw_update_from_obj {
+		my $self = shift;
+		my $obj = shift;
+		$self = $obj;
 	}
 };
 
@@ -311,6 +368,12 @@ L<Type::Tiny|Type::Tiny::Manual>
 =item ttie
 
 =end trustme
+
+=head2 About Cloning with Storage::dclone (and Clone::clone)
+
+Cloning variables with Storage::dclone works, but cloning with Clone::clone is
+not possible. See
+L<Bug #127576 for Type-Tie: Doesn't work with Clone::clone|https://rt.cpan.org/Public/Bug/Display.html?id=127576>
 
 =head1 BUGS
 
