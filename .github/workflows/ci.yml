@@ -134,7 +134,7 @@ jobs:
         run: cover -delete
       - name: Test suite
         working-directory: ./build/
-        run: gha-prove -b -r t
+        run: gha-prove -b -Iinc -r t
       - name: Coveralls.io report
         if: success() && matrix.coverage
         working-directory: ./build/
