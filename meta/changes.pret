@@ -104,4 +104,14 @@
 	issued  2020-11-18;
 	changeset [
 		item "Support Hash::Util::FieldHash::Compat as an alternative to Hash::FieldHash because it seems to pass its tests better on Perl 5.8."^^Change;
+		item [
+			label "Set up Storable hooks to play nice with Storable::dclone.";
+			dcs:blame <urn:uuid:6c7beadd-14b0-489a-940c-57ccd2ec90df>;
+		];
+		item [
+			a dcs:Documentation;
+			label "Document that Clone::clone will not work.";
+			dcs:blame <urn:uuid:6c7beadd-14b0-489a-940c-57ccd2ec90df>;
+			seealso <https://rt.cpan.org/Public/Bug/Display.html?id=127576>;
+		];
 	].
